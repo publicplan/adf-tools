@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DH\Adf\Builder;
 
+use DH\Adf\Node\Inline\Date;
+use DH\Adf\Node\Inline\Status;
 use DH\Adf\Node\Inline\Text;
 use DH\Adf\Node\Mark\Em;
 use DH\Adf\Node\Mark\Link;
@@ -19,6 +21,13 @@ trait TextBuilder
     public function text(string $text): self
     {
         $this->append(new Text($text));
+
+        return $this;
+    }
+
+    public function markedText(string $text, array $markNodes): self
+    {
+        $this->append(new Text($text, ...$markNodes));
 
         return $this;
     }
@@ -75,6 +84,20 @@ trait TextBuilder
     public function link(string $text, string $href, ?string $title = null): self
     {
         $this->append(new Text($text, new Link($href, $title)));
+
+        return $this;
+    }
+
+    public function status(string $text, string $color, ?string $localId = null, ?string $style = null): self
+    {
+        $this->append(new Status($text, $color, $localId, $style));
+
+        return $this;
+    }
+
+    public function date(string $timestamp): self
+    {
+        $this->append(new Date($timestamp));
 
         return $this;
     }
