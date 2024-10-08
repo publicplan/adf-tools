@@ -12,7 +12,7 @@ class TextExporter extends HtmlExporter
     public function export(): string
     {
         \assert($this->node instanceof Text);
-        $output = $this->node->getText();
+        $output = htmlentities($this->node->getText());
 
         foreach ($this->node->getMarks() as $mark) {
             $class = self::NODE_MAPPING[$mark::class];
