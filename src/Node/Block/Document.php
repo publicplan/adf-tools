@@ -61,4 +61,15 @@ class Document extends BlockNode implements JsonSerializable
 
         return $result;
     }
+
+    public function trimEmptyParagraphs(): void
+    {
+        /** @var BlockNode $item */
+        foreach ($this->content as $idx => $item) {
+            if (count($item->getContent()) === 0) {
+                unset($this->content[$idx]);
+            }
+        }
+        $this->content = array_values($this->content);
+    }
 }
